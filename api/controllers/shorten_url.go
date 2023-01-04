@@ -57,9 +57,9 @@ func ShortenUrl(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"error":  "invalid URL."});
 	}
 
-	// Check for domain error
-	if !helpers.RemoveDomainError(body.URL) {
-		return c.Status(fiber.StatusServiceUnavailable).JSON(fiber.Map{"error": "Invalid Domain"});
+	// Check for SERVER_HOST error
+	if !helpers.RemoveSERVER_HOSTError(body.URL) {
+		return c.Status(fiber.StatusServiceUnavailable).JSON(fiber.Map{"error": "Invalid SERVER_HOST"});
 	}
 
 	// Enforce https, SSL
@@ -105,7 +105,7 @@ func ShortenUrl(c *fiber.Ctx) error {
 
 	response.XRateLimitReset = ttl / time.Nanosecond / time.Minute;
 
-	response.Alias = os.Getenv("DOMAIN") + "/" + id;
+	response.Alias = os.Getenv("SERVER_HOST") + "/" + id;
 
 	return c.Status(fiber.StatusOK).JSON(response); 
 }

@@ -22,20 +22,20 @@ func EnforceHTTPS(url string) string {
 	return url;
 }
 
-func RemoveDomainError(url string) bool {
+func RemoveSERVER_HOSTError(url string) bool {
 	
-	if url == os.Getenv("DOMAIN") {
+	if url == os.Getenv("SERVER_HOST") {
 		return false;
 	}
 
 	// Remove "http://", "https://" "www." from supplied url
-	// And check it matches server's domain
+	// And check it matches server's SERVER_HOST
 	newUrl := strings.Replace(url, "http://", "", 1);
 	newUrl = strings.Replace(newUrl, "https://", "", 1);
 	newUrl = strings.Replace(newUrl, "www.", "", 1);
 	newUrl = strings.Split(newUrl, "/")[0];
 
-	if newUrl == os.Getenv("DOMAIN") {
+	if newUrl == os.Getenv("SERVER_HOST") {
 		return false;
 	}
 
